@@ -8,7 +8,7 @@ This represents my solutions to the [fly.io](https://fly.io/dist-sys/) distribut
 - Broadcast Challengs: 
     - [x] Single Node.
     - [x] Multi Node.
-    - [ ] Fault Tolerance.
+    - [x] Fault Tolerance.
     - [ ] Efficiency Part 1.
     - [ ] Efficiency Part 2.
 - [ ] Grow-Only Counter

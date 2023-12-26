@@ -1,4 +1,4 @@
-package services
+package node
 
 import (
 	"encoding/json"
@@ -92,6 +92,7 @@ func (n *Node) HandleBroadcast(message []byte) ([]byte, error) {
 			newBroadcast.Body.MsgId = n.GetNextMessageId()
 			msg, _ := json.Marshal(newBroadcast)
 			n.Send(msg)
+			n.awaitAck(newBroadcast.Body.MsgId, msg)
 		}
 	}
 
@@ -139,4 +140,13 @@ func (n *Node) HandleTopology(message []byte) ([]byte, error) {
 
 	response, err := json.Marshal(topologyOk)
 	return response, err
+}
+
+func (n *Node) HandleBroadcastOk(message []byte) ([]byte, error) {
+	broadcastOk := BroadcastOkMessage{}
+	if err := json.Unmarshal(message, &broadcastOk); err != nil {
+		return nil, err
+	}
+	n.ackMsg(broadcastOk.Body.InReplyTo)
+	return nil, nil
 }
